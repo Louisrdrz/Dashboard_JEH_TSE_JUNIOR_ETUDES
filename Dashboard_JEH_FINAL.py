@@ -125,7 +125,7 @@ def main():
     # Show sidebar if toggled
     if st.session_state.show_sidebar:
         with st.sidebar:
-            st.sidebar.title("Paramètre d'édition : pseudo-aléatoire")
+            st.sidebar.title("Paramétre d'édition : pseudo-aléatoire")
             st.sidebar.markdown("Coefficient uniforme entre 0 et 1, 0 = constant, 1 = aléatoire, 0.2 est raisonnable")
             coef = st.sidebar.slider("Coefficient (coef)", min_value=0.0, max_value=1.0, value=0.2, step=0.01)
 
