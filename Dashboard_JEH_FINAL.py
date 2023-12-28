@@ -176,11 +176,11 @@ def main():
         result = calculette(budget_tot, nb_phase, coef, phase_details)
         if result == "insufficient_value":
             st.error("Erreur : valeur du JEH insuffisante (< 80) dans au moins une phase.")
-            st.error("Conseil : augmenter la fraction du budget de cette phase.")
+            st.info("Conseil : augmenter la fraction du budget de cette phase.")
 
         elif result == "budget_too_high":
             st.error("Erreur : le budget par intervenant est trop élevé pour une seule phase.")
-            st.error("Conseil : augmenter le nombre d'intervenant.")
+            st.info("Conseil : augmenter le nombre d'intervenant.")
 
         else:
             st.markdown("### Distribution optimale :")
