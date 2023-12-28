@@ -180,7 +180,7 @@ def main():
 
         elif result == "budget_too_high":
             st.error("Erreur : le budget par intervenant est trop élevé pour une seule phase.")
-            st.info("Conseil : augmenter le nombre d'intervenant.")
+            st.info("Conseil : augmenter le nombre d'intervenants.")
 
         else:
             st.markdown("### Distribution optimale :")
