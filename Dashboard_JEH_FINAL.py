@@ -84,7 +84,10 @@ def display_optimal_distribution(result):
     jeh_counts = []
     valeur = []
     count = 0
-
+    # Additional lines to create an invoice-like output
+    invoice = """
+Désgination     Nombre de JEH    Prix unitaire (HT)    TOTAL\n"""
+    
     for i, (n_jeh, valeur_jeh) in enumerate(result):
         st.markdown(f"**Phase {i + 1}**")
         st.info(f"Nombre de JEH : {n_jeh}")
@@ -95,10 +98,17 @@ def display_optimal_distribution(result):
         valeur.append(n_jeh*valeur_jeh)
 
     count =sum(valeur)
-
+    tva = count * 0.2
+    total_ttc = count * 1.2
+    invoice += f"\nNombre total de JEH    {sum(jeh_counts)}\n"
+    invoice += f"TOTAL HT    {count:.2f} €\n"
+    invoice += f"TVA 20% (à titre indicatif)    {tva:.2f} €\n"
+    invoice += f"Sur les encaissements\n"
+    invoice += f"TOTAL TTC    {total_ttc:.2f} €\n"
+    
     st.markdown(f"**Coût total de la mission : {count} euros**")
-
-
+    print(invoice)
+    
      # Plot the graph
     
     fig = go.Figure(data=[go.Bar(x=phase_names, y=phase_values)])
