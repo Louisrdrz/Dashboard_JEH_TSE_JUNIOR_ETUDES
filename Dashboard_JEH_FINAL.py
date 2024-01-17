@@ -40,9 +40,14 @@ def calculette(budget_tot, nb_phase, coef, phase_details):
 
     budget_moyen_phase = [budget_tot * frac for frac in fractions]
     
-    if budget_moyen_phase[0] / phase_details[0][0] > 460:
-        return "budget_too_high"
+    #if budget_moyen_phase[0] / phase_details[0][0] > 460:
+        #return "budget_too_high"
     
+    # New check for single phase and single intervenant with high budget
+    if nb_phase == 1 and phase_details[0][0] == 1 and budget_moyen_phase[0] > 460:
+        n_jeh = int(budget_moyen_phase[0] / 450) + 1  # Calculate the number of JEH
+        valeur_jeh = budget_moyen_phase[0] / n_jeh  # Calculate the value per JEH
+        return [(n_jeh, 10 * (valeur_jeh // 10))]
     
     n_jeh_total = float('inf')
     best_list = []
