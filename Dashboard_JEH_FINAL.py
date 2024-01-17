@@ -1,6 +1,7 @@
 import numpy as np
 import streamlit as st
 import plotly.graph_objs as go  
+import pandas as pd
 
 #si un seul intervenant c'est ok, si plusieurs : le nombre de JEH est un multiple du nombre d'intervenants
 def check_jeh(n_inter, n_jeh):
@@ -78,16 +79,14 @@ def calculette(budget_tot, nb_phase, coef, phase_details):
 
     return best_list
 
+
 def display_optimal_distribution(result):
     phase_names = []
     phase_values = []
     jeh_counts = []
     valeur = []
     count = 0
-    # Additional lines to create an invoice-like output
-    invoice = """
-Désgination     Nombre de JEH    Prix unitaire (HT)    TOTAL\n"""
-    
+
     for i, (n_jeh, valeur_jeh) in enumerate(result):
         st.markdown(f"**Phase {i + 1}**")
         st.info(f"Nombre de JEH : {n_jeh}")
@@ -98,17 +97,10 @@ Désgination     Nombre de JEH    Prix unitaire (HT)    TOTAL\n"""
         valeur.append(n_jeh*valeur_jeh)
 
     count =sum(valeur)
-    tva = count * 0.2
-    total_ttc = count * 1.2
-    invoice += f"\nNombre total de JEH    {sum(jeh_counts)}\n"
-    invoice += f"TOTAL HT    {count:.2f} €\n"
-    invoice += f"TVA 20% (à titre indicatif)    {tva:.2f} €\n"
-    invoice += f"Sur les encaissements\n"
-    invoice += f"TOTAL TTC    {total_ttc:.2f} €\n"
-    
+
     st.markdown(f"**Coût total de la mission : {count} euros**")
-    st.text(invoice)
-    
+
+
      # Plot the graph
     
     fig = go.Figure(data=[go.Bar(x=phase_names, y=phase_values)])
@@ -123,6 +115,45 @@ Désgination     Nombre de JEH    Prix unitaire (HT)    TOTAL\n"""
 
     st.plotly_chart(fig, use_container_width=True)
 
+def display_invoice_table(result):
+    # Create lists to hold the data
+    designations = []
+    nombre_de_jeh = []
+    prix_unitaire_ht = []
+    total_ht = []
+
+    # Fill in the data based on the result
+    for i, (n_jeh, valeur_jeh) in enumerate(result):
+        designations.append(f"Phase {i + 1}")
+        nombre_de_jeh.append(n_jeh)
+        prix_unitaire_ht.append(valeur_jeh)
+        total_ht.append(n_jeh * valeur_jeh)
+
+    # Add the totals
+    designations.append("Nombre total de JEH")
+    nombre_de_jeh.append(sum(nombre_de_jeh))
+    prix_unitaire_ht.append("")
+    total_ht.append(sum(total_ht))
+
+    # Add TVA and TOTAL TTC
+    designations.extend(["", "TOTAL HT", "TVA 20% (à titre indicatif)", "Sur les encaissements", "TOTAL TTC"])
+    nombre_de_jeh.extend([""] * 5)
+    prix_unitaire_ht.extend([""] * 5)
+    total_ht.extend(["", total_ht[-1], total_ht[-1] * 0.2, "", total_ht[-1] * 1.2])
+
+    # Create a DataFrame
+    invoice_df = pd.DataFrame({
+        'Désignation': designations,
+        'Nombre de JEH': nombre_de_jeh,
+        'Prix unitaire (HT)': prix_unitaire_ht,
+        'TOTAL': total_ht
+    })
+
+    # Set the DataFrame's index to be the Désignation column
+    invoice_df.set_index('Désignation', inplace=True)
+
+    # Display the DataFrame as a table in Streamlit
+    st.table(invoice_df)
 
 # Initialize session state
 if 'show_sidebar' not in st.session_state:
@@ -200,6 +231,7 @@ def main():
         else:
             st.markdown("### Distribution optimale :")
             display_optimal_distribution(result)
+            display_invoice_table(result)
         
 
 if __name__ == "__main__":
