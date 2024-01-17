@@ -98,7 +98,7 @@ def display_optimal_distribution(result):
 
     count =sum(valeur)
 
-    st.markdown(f"**Coût total de la mission : {count} euros**")
+    st.markdown(f"**Coût total de la mission HT : {count} euros**")
 
 
      # Plot the graph
@@ -136,7 +136,7 @@ def display_invoice_table(result):
     total_ht.append(sum(total_ht))
 
     # Add TVA and TOTAL TTC
-    designations.extend(["", "TOTAL HT", "TVA 20% (à titre indicatif)", "Sur les encaissements", "TOTAL TTC"])
+    designations.extend(["", "TOTAL HT", "TVA 20% (à titre indicatif)" sur les encaissements", "TOTAL TTC"])
     nombre_de_jeh.extend([""] * 5)
     prix_unitaire_ht.extend([""] * 5)
     total_ht.extend(["", total_ht[-1], total_ht[-1] * 0.2, "", total_ht[-1] * 1.2])
@@ -192,7 +192,7 @@ def main():
     with col2:
         st.image("Logo TSE Junior Etudes.jpg", use_column_width=True)
 
-    budget_tot = st.number_input("Entrer le budget total de la mission (multiple de 100)", value = 1000, max_value = 200000, min_value=100, step=100)
+    budget_tot = st.number_input("Entrer le budget total HT de la mission (multiple de 100)", value = 1000, max_value = 200000, min_value=100, step=100)
     nb_phase = st.number_input("Entrer le nombre de phases", min_value=1, step=1)
     coef = 0.2
     # coef : entre 0 et 1, intervale de l'uniforme, 0 = constant, 1 = [0, 2 mu] très large, 0.2 est raisonnable
