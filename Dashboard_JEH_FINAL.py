@@ -136,7 +136,7 @@ def display_invoice_table(result):
     total_ht.append(sum(total_ht))
 
     # Add TVA and TOTAL TTC
-    designations.extend(["", "TOTAL HT", "TVA 20% (à titre indicatif)" sur les encaissements", "TOTAL TTC"])
+    designations.extend(["", "TOTAL HT", "TVA 20% (à titre indicatif) sur les encaissements", "TOTAL TTC"])
     nombre_de_jeh.extend([""] * 5)
     prix_unitaire_ht.extend([""] * 5)
     total_ht.extend(["", total_ht[-1], total_ht[-1] * 0.2, "", total_ht[-1] * 1.2])
