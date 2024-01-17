@@ -107,7 +107,7 @@ Désgination     Nombre de JEH    Prix unitaire (HT)    TOTAL\n"""
     invoice += f"TOTAL TTC    {total_ttc:.2f} €\n"
     
     st.markdown(f"**Coût total de la mission : {count} euros**")
-    print(invoice)
+    st.text(invoice)
     
      # Plot the graph
     
