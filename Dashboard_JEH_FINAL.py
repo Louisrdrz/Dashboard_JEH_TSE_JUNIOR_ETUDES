@@ -53,7 +53,7 @@ def calculette(budget_tot, nb_phase, coef, phase_details):
     n_jeh_total = float('inf')
     best_list = []
 
-    for _ in range(2000):
+    for _ in range(10000):
         current_list = []
         for i in range(nb_phase):
             budget = np.random.uniform(
